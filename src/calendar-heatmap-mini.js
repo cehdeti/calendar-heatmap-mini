@@ -297,7 +297,8 @@ function calendarHeatmap() {
       var dateStr = moment(d).format('MM/DD/YY');
       var count = countForDate(d);
       var description = descriptionForDate(d);
-      return (count ? count : locale.No) + ' ' + pluralizedTooltipUnit(count) + ' ' + locale.on + ' ' + dateStr + description;
+      var if_desc = (description != '') ? ': ' : ''
+      return (count ? count : locale.No) + ' ' + pluralizedTooltipUnit(count) + ' ' + locale.on + ' ' + dateStr + if_desc + description;
     }
 
     function countForDate(d) {
