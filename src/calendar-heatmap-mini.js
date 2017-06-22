@@ -185,7 +185,6 @@ function calendarHeatmap() {
                 var x = parseInt(this.getAttribute('x'));
                 var y = parseInt(this.getAttribute('y')) - SQUARE_PADDING;
                 var tooltipLabel = tooltipText(d);
-
                 // append an invisible svg text element for pre-calculating width
                 dummyTooltip = svg.append('text')
                     .style('visibility', 'hidden')
@@ -297,7 +296,8 @@ function calendarHeatmap() {
     function tooltipText(d) {
       var dateStr = moment(d).format('MM/DD/YY');
       var count = countForDate(d);
-      return (count ? count : locale.No) + ' ' + pluralizedTooltipUnit(count) + ' ' + locale.on + ' ' + dateStr;
+      var description = descriptionForDate(d);
+      return (count ? count : locale.No) + ' ' + pluralizedTooltipUnit(count) + ' ' + locale.on + ' ' + dateStr + description;
     }
 
     function countForDate(d) {
@@ -309,6 +309,17 @@ function calendarHeatmap() {
         count = match.count;
       }
       return count;
+    }
+
+    function descriptionForDate(d) {
+      var description = '';
+      var match = chart.data().find(function (element, index) {
+        return moment(element.date).isSame(d, 'day');
+      });
+      if (match) {
+        description = match.description;
+      }
+      return description;
     }
 
     function formatWeekday(weekDay) {
