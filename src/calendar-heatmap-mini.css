@@ -17,7 +17,7 @@ rect.day-cell:hover {
   stroke-width: 1px;
 }
 
-.calendar-heatmap {
+.calendar-heatmap-mini {
   box-sizing: initial;
   padding-left: 30px;
   padding-top: 30px;
