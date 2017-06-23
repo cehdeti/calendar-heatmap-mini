@@ -31,7 +31,7 @@ function calendarHeatmap() {
   var startDate = null;
   var data = [];
   var max = null;
-  var colorRange = ['#D8E6E7', '#218380'];
+  var colorRange = ['#ebedf0', '#f5ef00', '#f5c400', '#f5a700', '#d96400'];
   var tooltipEnabled = true;
   var tooltipUnit = 'Event';
   var legendEnabled = true;
@@ -128,7 +128,7 @@ function calendarHeatmap() {
     // color range
     var color = d3.scaleLinear()
       .range(chart.colorRange())
-      .domain([0, max]);
+      .domain([0, 1, 2, 3, 4]);
 
     var tooltip;
     var dayRects;

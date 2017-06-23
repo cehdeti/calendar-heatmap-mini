@@ -11,10 +11,14 @@ text.day-cell-tooltip {
     font-weight: 600;
     color: #000000;
 }
+
 rect.day-cell:hover {
   stroke: #555555;
   stroke-width: 1px;
 }
+
 .calendar-heatmap {
   box-sizing: initial;
+  padding-left: 30px;
+  padding-top: 30px;
 }
