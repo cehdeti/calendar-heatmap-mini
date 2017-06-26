@@ -23,11 +23,11 @@ function calendarHeatmap() {
   var height = 125;
   var legendWidth = 150;
   var selector = 'body';
-  var SQUARE_LENGTH = 12;
+  var SQUARE_LENGTH = 18;
   var SQUARE_PADDING = 3;
   var MONTH_LABEL_PADDING = 10;
   var now = moment().endOf('day').toDate();
-  var yearAgo = moment().startOf('day').subtract(1, 'year').toDate();
+  var yearAgo = moment().startOf('day').subtract(3, 'months').toDate();
   var startDate = null;
   var data = [];
   var max = null;
@@ -68,7 +68,7 @@ function calendarHeatmap() {
   chart.startDate = function (value) {
     if (!arguments.length) { return startDate; }
     yearAgo = value;
-    now = moment(value).endOf('day').add(1, 'year').toDate();
+    now = moment(value).endOf('day').add(3, 'months').toDate();
     return chart;
   };
 
@@ -111,10 +111,17 @@ function calendarHeatmap() {
   function chart() {
 
     d3.select(chart.selector()).selectAll('svg.calendar-heatmap-mini').remove(); // remove the existing chart, if it exists
+    // generates an array of date objects within the specified range
+    var lastDay = chart.data()[chart.data().length-1].date
+    var three_months_before_last_day = moment(lastDay).subtract(3, 'months');
+    var dateRange = d3.timeDays(three_months_before_last_day, lastDay);
 
-    var dateRange = d3.timeDays(yearAgo, now); // generates an array of date objects within the specified range
-    var monthRange = d3.timeMonths(moment(yearAgo).startOf('month').toDate(), now); // it ignores the first month if the 1st date is after the start of the month
+    // it ignores the first month if the 1st date is after the start of the month
+    var monthRange = d3.timeMonths(moment(yearAgo).startOf('month').toDate(), moment(now).startOf('month').toDate());
+
+    // var firstDate = moment(dateRange[0]).subtract(3, 'months');
     var firstDate = moment(dateRange[0]);
+
     // initialize data with 0 counts if there is none
     if (chart.data().length === 0) {
       var chartData = d3.timeDays(yearAgo, now).map(function (dateElement) {
